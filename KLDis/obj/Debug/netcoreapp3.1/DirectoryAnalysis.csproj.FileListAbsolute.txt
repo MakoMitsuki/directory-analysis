@@ -1,0 +1,11 @@
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\bin\Debug\netcoreapp3.1\DirectoryAnalysis.exe
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\bin\Debug\netcoreapp3.1\DirectoryAnalysis.deps.json
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\bin\Debug\netcoreapp3.1\DirectoryAnalysis.runtimeconfig.json
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\bin\Debug\netcoreapp3.1\DirectoryAnalysis.runtimeconfig.dev.json
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\bin\Debug\netcoreapp3.1\DirectoryAnalysis.dll
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\bin\Debug\netcoreapp3.1\DirectoryAnalysis.pdb
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\obj\Debug\netcoreapp3.1\DirectoryAnalysis.csprojAssemblyReference.cache
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\obj\Debug\netcoreapp3.1\DirectoryAnalysis.AssemblyInfoInputs.cache
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\obj\Debug\netcoreapp3.1\DirectoryAnalysis.AssemblyInfo.cs
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\obj\Debug\netcoreapp3.1\DirectoryAnalysis.dll
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\obj\Debug\netcoreapp3.1\DirectoryAnalysis.pdb
