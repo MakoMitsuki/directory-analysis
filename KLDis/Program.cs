@@ -46,9 +46,11 @@ namespace DirectoryAnalysis
         public static void ProcessFile(string file)
         {
             // Console.WriteLine("Processed file '{0}'.", file);
-            var path = Path.Combine("./assets", asset);
-            var result = FileTypeVerifier.What(path);
-            Console.WriteLine($"{asset} is a {result.Name} ({result.Description}).");
+            var result = FileTypeVerifier.What(file);
+            if (result.Name.Equals("PDF") || result.Name.Equals("JPEG"))
+            {
+                Console.WriteLine($"{file} is a {result.Name} ({result.Description}).");
+            }
         }
     }
 }
