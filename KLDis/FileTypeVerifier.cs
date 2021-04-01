@@ -9,7 +9,6 @@ namespace DirectoryAnalysis
         private static FileTypeVerifyResult Unknown = new FileTypeVerifyResult
         {
             Name = "Unknown",
-            Description = "Unknown File Type",
             IsVerified = false
         };
 

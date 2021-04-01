@@ -9,3 +9,5 @@ C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\
 C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\obj\Debug\netcoreapp3.1\DirectoryAnalysis.AssemblyInfo.cs
 C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\obj\Debug\netcoreapp3.1\DirectoryAnalysis.dll
 C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\obj\Debug\netcoreapp3.1\DirectoryAnalysis.pdb
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\bin\Debug\netcoreapp3.1\CsvHelper.dll
+C:\Users\harun\Documents\b\samarkand-storefront-challenge-be\directory-analysis\KLDis\obj\Debug\netcoreapp3.1\DirectoryAnalysis.csproj.CopyComplete

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Collections;
+using static DirectoryAnalysis.ToCSV;
+using System.Security.Cryptography;
 
 namespace DirectoryAnalysis
 {
@@ -15,6 +16,7 @@ namespace DirectoryAnalysis
             // Takes the path for the output file
             Console.WriteLine("Type the path for the output file.");
             String outputFilePath = Convert.ToString(Console.ReadLine());
+            ToCSV c = new ToCSV(outputFilePath);
 
             // Ask if we should also look into the subdirectories
             Console.WriteLine("Should we look into the subdirectories? [Y/N]");
@@ -23,33 +25,53 @@ namespace DirectoryAnalysis
 
             if (Directory.Exists(directory))
             {
-                ProcessDirectory(directory, ifSubdirectories);
+                ProcessDirectory(directory, ifSubdirectories, c);
             }
         }
 
-        public static void ProcessDirectory(string directory, Boolean ifSubdirectories)
+        public static void ProcessDirectory(string directory, Boolean ifSubdirectories, ToCSV outputFile)
         {
             // Process the list of files found in the directory.
             string[] fileEntries = Directory.GetFiles(directory);
             foreach (string fileName in fileEntries)
-                ProcessFile(fileName);
+                ProcessFile(fileName, outputFile);
 
             // Recurse into subdirectories of this directory.
             if (ifSubdirectories)
             {
                 string[] subdirectoryEntries = Directory.GetDirectories(directory);
                 foreach (string subdirectory in subdirectoryEntries)
-                    ProcessDirectory(subdirectory, ifSubdirectories);
+                    ProcessDirectory(subdirectory, ifSubdirectories, outputFile);
             }
         }
 
-        public static void ProcessFile(string file)
+        public static void ProcessFile(string file, ToCSV outputFile)
         {
-            // Console.WriteLine("Processed file '{0}'.", file);
             var result = FileTypeVerifier.What(file);
+            var md5hash = CalculateMD5(file);
             if (result.Name.Equals("PDF") || result.Name.Equals("JPEG"))
             {
-                Console.WriteLine($"{file} is a {result.Name} ({result.Description}).");
+                // Console.WriteLine($"{file} is a {result.Name} ({result.Description}).");
+                WriteToCSV(outputFile, file, result.Name, md5hash);
+            }
+        }
+
+        public static void WriteToCSV(ToCSV outputFile, string fullPath, string fType, string md5) {
+            CsvRow row = new CsvRow();
+            Console.WriteLine(String.Format("{0}, {1}, {2}", fullPath, fType, md5));
+            row.Add(String.Format("{0}, {1}, {2}", fullPath, fType, md5));
+            outputFile.WriteRow(row);
+        }
+
+        public static string CalculateMD5(string filename)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(filename))
+                {
+                    var hash = md5.ComputeHash(stream);
+                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                }
             }
         }
     }
