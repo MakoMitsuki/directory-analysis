@@ -9,32 +9,37 @@ namespace DirectoryAnalysis
         public static void Main(string[] args)
         {
             // Takes the directory
-            Console.WriteLine("Type the directory that contains the files you want analyzed.");
+            Console.WriteLine("Type the directory that contains the files you want analyzed:");
             String directory = Convert.ToString(Console.ReadLine());
 
+            while (!Directory.Exists(directory)) {
+                Console.WriteLine("Invalid directory. Try again.");
+                Console.WriteLine("Type the directory that contains the files you want analyzed:");
+                directory = Convert.ToString(Console.ReadLine());
+            }
+
             // Takes the path for the output file
-            Console.WriteLine("Type the path for the output file.");
+            Console.WriteLine("Type the CSV FILE path for the output file:");
             String outputFile = Convert.ToString(Console.ReadLine());
 
             // Ask if we should also look into the subdirectories
-            Console.WriteLine("Should we look into the subdirectories? [Y/N]");
-            String ifSubdirectoriesInput = Convert.ToString(Console.ReadLine());
-            Boolean ifSubdirectories = ifSubdirectoriesInput.ToLower().Equals("y");
+            Console.WriteLine("Should we look into the subdirectories? [Type Y for yes, otherwise enter any key]:");
+            Boolean ifSubdirectories = Convert.ToString(Console.ReadLine()).ToLower().Equals("y");
 
-            if (Directory.Exists(directory))
-            {
-                ProcessDirectory(directory, ifSubdirectories, outputFile);
-            }
+            Console.WriteLine("Processing the directory...");
+            ProcessDirectory(directory, ifSubdirectories, outputFile);
+
+            Console.WriteLine("You should now be able to see your results at " + outputFile);
         }
 
         public static void ProcessDirectory(string directory, Boolean ifSubdirectories, string outputFile)
         {
-            // Process the list of files found in the directory.
+            // Processes the files in the immediate directory
             string[] fileEntries = Directory.GetFiles(directory);
             foreach (string fileName in fileEntries)
                 ProcessFile(fileName, outputFile);
 
-            // Recurse into subdirectories of this directory.
+            // Recurses the subdirectories
             if (ifSubdirectories)
             {
                 string[] subdirectoryEntries = Directory.GetDirectories(directory);
@@ -46,20 +51,14 @@ namespace DirectoryAnalysis
         public static void ProcessFile(string file, string outputFile)
         {
             var result = FileTypeVerifier.What(file);
-            var md5hash = CalculateMD5(file);
+            
+            // Parses the files only if they are a PDF or a JPEG file
             if (result.Name.Equals("PDF") || result.Name.Equals("JPEG"))
             {
-                // Console.WriteLine($"{file} is a {result.Name} ({result.Description}).");
+                var md5hash = CalculateMD5(file);
                 AddToCSV(outputFile, file, result.Name, md5hash);
             }
         }
-
-        /* public static void WriteToCSV(ToCSV outputFile, string fullPath, string fType, string md5) {
-            CsvRow row = new CsvRow();
-            Console.WriteLine(String.Format("{0}, {1}, {2}", fullPath, fType, md5));
-            row.Add(String.Format("{0}, {1}, {2}", fullPath, fType, md5));
-            outputFile.WriteRow(row);
-        } */
 
         public static string CalculateMD5(string filename)
         {
