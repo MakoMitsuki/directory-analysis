@@ -6,13 +6,24 @@ namespace DirectoryAnalysis
 {
     public static class FileTypeVerifier
     {
-        private static IEnumerable<FileType> Types { get; set; }
-
         private static FileTypeVerifyResult Unknown = new FileTypeVerifyResult
         {
             Name = "Unknown",
             IsVerified = false
         };
+
+        static FileTypeVerifier()
+        {
+            Types = new List<FileType>
+            {
+                new Jpeg(),
+                new Pdf()
+            }
+                .OrderByDescending(x => x.SignatureLength)
+                .ToList();
+        }
+
+        private static IEnumerable<FileType> Types { get; set; }
 
         public static FileTypeVerifyResult What(string path)
         {
@@ -28,8 +39,7 @@ namespace DirectoryAnalysis
                     break;
             }
 
-            // if the filetype is recognized as a JPG/PDF, return JPG/PDF
-            // otherwise return unknown
+            // if the filetype is recognized as a JPG/PDF, return JPG/
             return result?.IsVerified == true ? result : Unknown;
         }
     }
