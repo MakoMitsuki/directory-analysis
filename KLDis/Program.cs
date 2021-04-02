@@ -13,7 +13,7 @@ namespace DirectoryAnalysis
             String directory = Convert.ToString(Console.ReadLine());
 
             while (!Directory.Exists(directory)) {
-                Console.WriteLine("Invalid directory. Try again.");
+                Console.WriteLine("Invalid directory. Try again.\n");
                 Console.WriteLine("Type the directory that contains the files you want analyzed:");
                 directory = Convert.ToString(Console.ReadLine());
             }
@@ -50,9 +50,10 @@ namespace DirectoryAnalysis
 
         public static void ProcessFile(string file, string outputFile)
         {
+            // get the file type
             var result = FileTypeVerifier.What(file);
             
-            // Parses the files only if they are a PDF or a JPEG file
+            // Parses the files only if they are a PDF or a JPEG file, gets the md5hash and adds it to the CSV file
             if (result.Name.Equals("PDF") || result.Name.Equals("JPEG"))
             {
                 var md5hash = CalculateMD5(file);

@@ -29,6 +29,7 @@ namespace DirectoryAnalysis
 
         public FileTypeVerifyResult Verify(Stream stream)
         {
+            // reads the file signature to verify the file type
             stream.Position = 0;
             var reader = new BinaryReader(stream);
             var headerBytes = reader.ReadBytes(SignatureLength);
