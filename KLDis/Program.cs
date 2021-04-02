@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using static DirectoryAnalysis.ToCSV;
 using System.Security.Cryptography;
 
 namespace DirectoryAnalysis
@@ -15,8 +14,7 @@ namespace DirectoryAnalysis
 
             // Takes the path for the output file
             Console.WriteLine("Type the path for the output file.");
-            String outputFilePath = Convert.ToString(Console.ReadLine());
-            ToCSV c = new ToCSV(outputFilePath);
+            String outputFile = Convert.ToString(Console.ReadLine());
 
             // Ask if we should also look into the subdirectories
             Console.WriteLine("Should we look into the subdirectories? [Y/N]");
@@ -25,11 +23,11 @@ namespace DirectoryAnalysis
 
             if (Directory.Exists(directory))
             {
-                ProcessDirectory(directory, ifSubdirectories, c);
+                ProcessDirectory(directory, ifSubdirectories, outputFile);
             }
         }
 
-        public static void ProcessDirectory(string directory, Boolean ifSubdirectories, ToCSV outputFile)
+        public static void ProcessDirectory(string directory, Boolean ifSubdirectories, string outputFile)
         {
             // Process the list of files found in the directory.
             string[] fileEntries = Directory.GetFiles(directory);
@@ -45,23 +43,23 @@ namespace DirectoryAnalysis
             }
         }
 
-        public static void ProcessFile(string file, ToCSV outputFile)
+        public static void ProcessFile(string file, string outputFile)
         {
             var result = FileTypeVerifier.What(file);
             var md5hash = CalculateMD5(file);
             if (result.Name.Equals("PDF") || result.Name.Equals("JPEG"))
             {
                 // Console.WriteLine($"{file} is a {result.Name} ({result.Description}).");
-                WriteToCSV(outputFile, file, result.Name, md5hash);
+                AddToCSV(outputFile, file, result.Name, md5hash);
             }
         }
 
-        public static void WriteToCSV(ToCSV outputFile, string fullPath, string fType, string md5) {
+        /* public static void WriteToCSV(ToCSV outputFile, string fullPath, string fType, string md5) {
             CsvRow row = new CsvRow();
             Console.WriteLine(String.Format("{0}, {1}, {2}", fullPath, fType, md5));
             row.Add(String.Format("{0}, {1}, {2}", fullPath, fType, md5));
             outputFile.WriteRow(row);
-        }
+        } */
 
         public static string CalculateMD5(string filename)
         {
@@ -72,6 +70,21 @@ namespace DirectoryAnalysis
                     var hash = md5.ComputeHash(stream);
                     return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
                 }
+            }
+        }
+
+        public static void AddToCSV(string outputFile, string fullPath, string fType, string md5)
+        {
+            try
+            {
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@outputFile, true))
+                {
+                    file.WriteLine(fullPath + "," + fType + "," + md5);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException("Error: ", e);
             }
         }
     }
